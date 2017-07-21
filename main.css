@@ -1,3 +1,89 @@
-h1 {
-    color: red;
+body {
+    font-family: 'Oxygen', sans-serif;
+    color: #204056;
 }
+
+.navbar-default .navbar-brand {
+    font-family: 'Oxygen', sans-serif;
+    color: #e9eaea;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-family: 'Oxygen', sans-serif;
+    color: #e9eaea;
+}
+
+.btn.btn-square { 
+    border-radius: 0;
+}
+
+.sidebarbox {
+    border: 2px solid #204056;
+    background: #e9eaea;
+}
+
+.navbar-toggle {
+    border-radius: 0px;
+}
+
+.navbar-toggle .icon-bar {
+    border-radius: 0px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background: #e9eaea;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #e9eaea;
+}
+
+.navbar-default {
+    background-color: #204056;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: #33536A;
+}
+
+.sidebar + .col-sm-3 {
+    position: fixed;
+}
+
+.col-sm-9 + .main {
+    height: 100px;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #FFFFFF;
+    background-color: #33536A;
+}
+
+@media (min-width: 768px){
+    .navbar-nav>li>a {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 7px;
+        padding-right: 7px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        margin-left: 15px;
+        border: 1.3px solid #e9eaea;
+    }
+}
+
+@media (min-width: 768px){
+    .navbar-nav>li>a:hover {
+        border: 1.3px solid #FFFFFF;
+    }
+}
+
+#current {
+    background-color: #33536A;
+}
+
