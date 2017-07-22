@@ -10,53 +10,61 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a href="#" class="navbar-brand">PIMPY.</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-nav">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a id="current" href="actiepunten.html">Actiepunten</a></li>
-                <li><a href="overzicht.html">Projecten</a></li>
-                <li><a href="account.html">Account</a></li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="current" href="actiepunten.html">Actiepunten</a></li>
+                    <li><a href="overzicht.html">Projecten</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
             </div>
         </div>
     </nav>
     
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 sidebarbox">
-                Teamnaam
+            <div class="col-sm-2 col-xs-12 sidebar">
+                <ul class="nav nav-sidebar">
+                <div class="team-name text-center">
+                      <p>FSR FNWI</p>
+                  </div>
+                  <li class="active">
+                    <a id="sidecurrent" href="#">Zelf</a>
+                </li>
+                <li>
+                    <a href="#">Iedereen</a>
+                </li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active">
+                    <a id="sidecurrent" href="#">Alle groepen</a>
+                </li>
+                <li><a href="#">DB</a></li>
+                <li><a href="#">SoFacIT</a></li>
+                <li><a href="#">PR</a></li>
+                <li>
+                    <a href="#">
+                        <span class="glyphicon
+                        glyphicon-plus"></span>
+                        Nieuwe groep</a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3 col-xs-12 sidebar">
-                <div class="row">
-                    <div class="col-xs-6 sidebarbox">
-                        ZELF
-                    </div>
-                    <div class="col-xs-6 sidebarbox">
-                        IEDEREEN
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </div>
-            </div>
-            <div class="col-sm-9 col-xs-12 main sidebarbox">
-                TAKEN
+            <div class="col-sm-10 col-xs-12 main">
             </div>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>

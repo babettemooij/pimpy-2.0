@@ -1,6 +1,7 @@
 body {
     font-family: 'Oxygen', sans-serif;
     color: #204056;
+    height: 100vh;
 }
 
 .navbar-default .navbar-brand {
@@ -16,11 +17,6 @@ body {
 
 .btn.btn-square { 
     border-radius: 0;
-}
-
-.sidebarbox {
-    border: 2px solid #204056;
-    background: #e9eaea;
 }
 
 .navbar-toggle {
@@ -51,17 +47,9 @@ body {
     background-color: #33536A;
 }
 
-.sidebar + .col-sm-3 {
-    position: fixed;
-}
-
-.col-sm-9 + .main {
-    height: 100px;
-}
-
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
     color: #FFFFFF;
-    background-color: #33536A;
+    background-color: #506D82;
 }
 
 @media (min-width: 768px){
@@ -81,9 +69,99 @@ body {
     .navbar-nav>li>a:hover {
         border: 1.3px solid #FFFFFF;
     }
+    .navbar {
+        border-radius: 0px;
+    }
 }
 
 #current {
-    background-color: #33536A;
+    background-color: #506D82;
+    color: #FFFFFF;
 }
 
+.main {
+    margin-top: 55px;
+    padding-top: 20px;
+}
+
+.sidebar {
+    top: 52px;
+    padding-top: 20px;
+    background-color: #e9eaea;
+    border-bottom: 2px solid #204056;
+}
+
+.navbar {
+    border: 0px solid transparent;
+    margin-bottom: 0px;
+}
+
+.row {
+    height: 100%;
+}
+
+.container-fluid {
+    height: 100%;
+}
+
+.navbar-fixed-top {
+    top: 0;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        height: 100%;
+        border-right: 2px solid #204056;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    .main {
+        margin-left: 16.666667%;
+        padding-left: 20px;
+    }
+    .sidebar ul li a {
+        border-top: 1px solid #204056; 
+        border-bottom: 1px solid #204056; 
+    }
+}
+
+#sidecurrent {
+    background-color: #204056;
+    color: #e9eaea;
+}
+
+a {
+    color: #204056;
+}
+
+.sidebar ul {
+    padding-bottom: 40px;
+}
+
+.sidebar .team-name {
+    padding:20px;
+}
+
+@media (max-width: 768px) {
+    .sidebar ul li a {
+        border: 1px solid #204056;
+    }
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.nav-sidebar>li>a:hover {
+    background-color: #FFFFFF;
+}
+
+.nav-sidebar>li:last-child {
+    border-bottom: 1px solid #204056;
+}
+
+.nav-sidebar>li:first-child {
+    border-top: 1px solid #204056;
+}
