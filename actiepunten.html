@@ -1,71 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head> 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PIMPY | Actiepunten</title>
-    <script src="actiepunten.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Muli|Oxygen:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="main.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIMPY | Tasks</title>
+  <link href="https://fonts.googleapis.com/css?family=Muli|Oxygen:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#" class="navbar-brand">PIMPY.</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-nav">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a id="current" href="actiepunten.html">Actiepunten</a></li>
-                    <li><a href="overzicht.html">Projecten</a></li>
-                    <li><a href="account.html">Account</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-2 col-xs-12 sidebar">
-                <ul class="nav nav-sidebar">
-                <div class="team-name text-center">
-                      <p>FSR FNWI</p>
-                  </div>
-                  <li class="active">
-                    <a id="sidecurrent" href="#">Zelf</a>
-                </li>
-                <li>
-                    <a href="#">Iedereen</a>
-                </li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li class="active">
-                    <a id="sidecurrent" href="#">Alle groepen</a>
-                </li>
-                <li><a href="#">DB</a></li>
-                <li><a href="#">SoFacIT</a></li>
-                <li><a href="#">PR</a></li>
-                <li>
-                    <a href="#">
-                        <span class="glyphicon
-                        glyphicon-plus"></span>
-                        Nieuwe groep</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-10 col-xs-12 main">
-            </div>
-        </div>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">PIMPY.</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-nav">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="current" href="actiepunten.html">Tasks</a></li>
+          <li><a href="overzicht.html">Projects</a></li>
+          <li><a href="account.html">Account</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2 col-xs-12 sidebar">
+        <ul class="nav nav-sidebar">
+          <div class="team-name text-center">
+            <p>FSR FNWI</p>
+          </div>
+          <li class="active">
+            <a href="#">Babette</a>
+          </li>
+          <li>
+            <a id="sidecurrent" href="#">Everybody</a>
+          </li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li class="active">
+            <a href="#">FSR FNWI</a>
+          </li>
+          <li><a id="sidecurrent" href="#">DB</a></li>
+          <li><a href="#">SOFacIT</a></li>
+          <li><a href="#">PR</a></li>
+          <li>
+            <a href="#">
+              <span class="glyphicon
+              glyphicon-plus"></span>
+              New group</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-10 col-xs-12 main">
+          <table class="table">
+            <thead>
+              <tr>
+                <td colspan="4">
+                  <h1>DB</h1>
+                </td>
+              </tr>
+              <td colspan="4">
+                <h3>Babette</h3>
+              </td>
+            </tr>
+            <tr>
+              <th>Task</th>
+              <th>People</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bestel de shirts voor de begeleiders en de commissie.</td>
+              <td>Babette</td>
+              <td class="green">Done</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr>
+              <td>Maak stappenplan voor het koken op de zaterdag.</td>
+              <td>Babette, Roan</td>
+              <td class="orange">Working on it</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr>
+              <td>Denk na over hoe we het extra geld kunnen inzetten.</td>
+              <td>Babette</td>
+              <td class="red">Stuck</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr> <td colspan="3" id="newtodo">
+              <span class="glyphicon
+              glyphicon-plus"></span>
+              New task
+            </td>
+            </tr>
+            <thead>
+                <td colspan="4">
+                <h3>Babette</h3>
+              </td>
+            </tr>
+            <tr>
+              <th>Task</th>
+              <th>People</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bestel de shirts voor de begeleiders en de commissie.</td>
+              <td>Babette</td>
+              <td class="green">Done</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+              </tr>
+            <tr>
+              <td>Maak stappenplan voor het koken op de zaterdag.</td>
+              <td>Babette, Roan</td>
+              <td class="orange">Working on it</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr>
+              <td>Denk na over hoe we het extra geld kunnen inzetten.</td>
+              <td>Babette</td>
+              <td class="red">Stuck</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr> <td colspan="3" id="newtodo">
+              <span class="glyphicon
+              glyphicon-plus"></span>
+              New task
+            </td>
+            </tr>
+            <thead>
+              <td colspan="4">
+                <h3>Babette</h3>
+              </td>
+            </tr>
+            <tr>
+              <th>Task</th>
+              <th>People</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bestel de shirts voor de begeleiders en de commissie.</td>
+              <td>Babette</td>
+              <td class="green">Done</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr>
+              <td>Maak stappenplan voor het koken op de zaterdag.</td>
+              <td>Babette, Roan</td>
+              <td class="orange">Working on it</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr>
+              <td>Denk na over hoe we het extra geld kunnen inzetten.</td>
+              <td>Babette</td>
+              <td class="red">Stuck</td>
+              <td> <span class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <tr> <td colspan="3" id="newtodo">
+              <span class="glyphicon
+              glyphicon-plus"></span>
+              New task
+            </td>
+            </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="actiepunten.js"></script>
 </body>
 </html>
