@@ -15,10 +15,6 @@ body {
     color: #e9eaea;
 }
 
-.btn.btn-square { 
-    border-radius: 0;
-}
-
 .navbar-toggle {
     border-radius: 0px;
 }
@@ -76,6 +72,7 @@ body {
     margin-top: 50px;
     padding-top: 20px;
     z-index: auto;
+    margin-bottom: 20px;
 }
 
 .sidebar {
@@ -123,6 +120,9 @@ body {
         padding-left: 20px;
         padding-top: 20px;
     }
+    table {
+        table-layout: fixed;
+    }
 }
 
 .sidebar ul:last-child {
@@ -149,6 +149,10 @@ a {
     .sidebar .team-name {
         padding: 20px;
     }
+    .main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 .team-name {
@@ -158,12 +162,11 @@ a {
 
 .nav-sidebar>li>a:hover {
     background-color: #FFFFFF;
-    color: #204056;
+    color: #001a2d;
 }
 
 .table { 
-    width: 100%; 
-    border: none!important;
+    width: 100%!important; 
 }
 
 tbody tr {
@@ -174,8 +177,9 @@ tbody tr {
 .table>thead>tr>td {
     border: none;
 }
-tbody td {
-    border-left: 2px solid #FFFFFF;
+
+.table>tbody>tr>td {
+    border-top: none!important;
 }
 
 tr:nth-child(n+2) {
@@ -191,18 +195,41 @@ tr:nth-child(n+2) {
 }
 
 .orange {
-    background-color: #FDAB3D; 
+    background-color: #FDAB3D;
 }
 
-tbody>tr>td:last-child {
+.btn {
+    border-radius: 0px;
+    border: none!important;
+    text-align: left;
+    display: table-cell;
+}
+
+tbody>tr>td:nth-child(4) {
     background-color: #FFFFFF;
     border: none!important;
 }
 
-#newtodo {
-    background-color: #e9eaea;
+.newtodo {
+    background-color: #f7f7f7;
 }
 
 thead tr th {
     border:none!important
+} 
+
+table h3 {
+    margin-top: 30px;
+}
+
+.newtask {
+    display: table-cell!important;
+}
+
+.form-control {
+    border-radius: 0px;
+    border: none;
+    color: #001a2d;
+    padding-left: 6px;
+    padding-right: 6px;
 }
