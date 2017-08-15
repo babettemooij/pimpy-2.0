@@ -1,0 +1,68 @@
+<% include partials/html-header %>
+<% include partials/header %>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-2 col-xs-12 sidebar">
+			<ul class="nav nav-sidebar">
+				<div class="team-name text-center">
+					<p>FSR FNWI</p>
+				</div>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="#">My Tasks</a></li>
+				<li><a href="#">FSR FNWI</a></li>
+				<li><a id="sidecurrent" href="#">DB</a></li>
+				<li><a href="#">SOFacIT</a></li>
+				<li><a href="#">PR</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-plus"></span> New group</a></li>
+			</ul>
+		</div>
+
+		<div class="col-sm-10 col-xs-12 col-xl-8 center-me main">
+
+			<h1>DB</h1>
+			<h3>Babette</h3>
+
+			<div class="table">
+				<div class="thead">
+					<div class="tr" colspan="3">
+						<span class="th">Task</span>
+						<span class="th">People</span>
+						<span class="th">Status</span>
+					</div>
+				</div>
+				<div class="tbody">
+					<% tasks.forEach(function(task){ %>
+						<div class="tr">
+							<span class="td"> <%= task.todo %> </span>
+							<span class="td"> <%= task.people %> </span>
+							<span class="td btn  
+							<% if (task.status === "Not started") { %>
+							red"
+							<%} else if (task.status == "In progress") { %>
+							orange"
+							<% } else { %>
+							green"
+						<% } %>> <%= task.status %> </span>
+							<span class="td"> <span class="glyphicon glyphicon-remove"></span></span>
+						</div>
+					<% }); %>
+
+					<div class="tr"> 
+						<div class="newtodo td btn">
+							<span class="glyphicon glyphicon-plus"></span>
+							New task
+						</div>
+						<div class="newtodo td btn">
+						</div>
+						<div class="newtodo td btn">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% include partials/html-footer %>
