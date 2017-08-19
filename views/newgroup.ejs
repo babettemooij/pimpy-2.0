@@ -1,0 +1,31 @@
+<% include partials/html-header %>
+<% include partials/header %>
+
+<div class="container mainform"
+	<form>
+		<div class="form-group">
+			<h2>Group</h2>
+        	<input name="group" class="form-control" type="text" placeholder="Groupname" required>
+        </div>
+        <div class="form-group">
+	        <h2>Members</h2>
+	        <div class="form-check">
+		        <label for="NAAM1">NAAM1: </label>
+		        <input id="NAAM1" type="checkbox">
+		    </div>
+	        <div class="form-check">
+		        <label for="NAAM3">NAAM3: </label>
+		        <input id="NAAM3" type="checkbox">
+		    </div>
+		    <div class="form-check">
+		        <label for="NAAM5">NAAM5: </label>
+		        <input id="NAAM5" type="checkbox">
+		    </div>
+        </div>
+        <div class="form-group">
+        	<input class="btn" id="btn-submit" type="submit">
+        </div>
+	</form>
+</div>
+
+<% include partials/html-footer %>

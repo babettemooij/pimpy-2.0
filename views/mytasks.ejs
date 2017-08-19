@@ -10,13 +10,9 @@
 				</div>
 			</ul>
 			<ul class="nav nav-sidebar">
-				<li><a href="/mytasks">My Tasks</a></li>
+				<li><a id="sidecurrent" href="/mytasks">My Tasks</a></li>
 				<% groups.forEach(function(tab){ %>
-					<li><a 
-					<% if (tab.title == group.title) { %>
-						id="sidecurrent"
-					<% } %>
-					href="/tasks/<%=tab.title%>"> <%= tab.title %></a></li>
+					<li><a href="/tasks/<%=tab.title%>"> <%= tab.title %></a></li>
 				<% }) %>
 				<li><a href="/newgroup"><span class="glyphicon glyphicon-plus"></span> Add group</a></li>
 				<li><a href="/newminutes"><span class="glyphicon glyphicon-plus"></span> Add minutes</a></li>

@@ -1,7 +1,7 @@
 body {
     font-family: 'Oxygen', sans-serif;
     color: #001a2d;
-    height: 100vh;
+    height: 99vh;
 }
 
 .navbar-default .navbar-brand {
@@ -53,7 +53,7 @@ body {
         padding-top: 15px;
         padding-bottom: 15px;
         text-align: center;
-        width: 75px;
+        width: 80px;
     }
 }
 
@@ -167,19 +167,23 @@ a {
 
 .tbody>.tr {
     border-left: 5px solid #001a2d !important;
-    background-color: #e9eaea!important;
+    background-color: #FFFFFF!important;
 }
 
 .table>.tr>.td {
     border: none;
-}
-
-.table>.tr>.td {
     border-top: none!important;
 }
 
 .tr:nth-child(n+2) {
     border-top: 2px solid #FFFFFF!important;
+}
+
+.tr>.td:nth-child(1) {
+    background-color: #e9eaea;
+}
+.tr>.td:nth-child(2) {
+    background-color: #e9eaea;
 }
 
 .green {
@@ -197,17 +201,20 @@ a {
 .btn {
     border-radius: 0px;
     border: none!important;
-    text-align: left;
     display: table-cell;
 }
 
-.tr>.td:nth-child(4) {
+.tr>form {
     background-color: #FFFFFF;
+}
+
+.tr>form>button>.td {
     border: none!important;
 }
 
 .newtodo {
     background-color: #f7f7f7!important;
+    text-align: left;
 }
 
 .th {
@@ -220,7 +227,6 @@ h3 {
 
 .form-control {
     border-radius: 0px;
-    border: none;
     color: #001a2d;
     padding-left: 6px;
     padding-right: 6px;
@@ -303,11 +309,44 @@ h3 {
 
 button {
     outline: none;
-    background: none;
     padding: 0;
     border: none;
 }
 
+button:not(.navbar-toggle) {
+    background: none!important;
+}
+
 .btn:active {
     box-shadow: none;
+}
+
+.mainform {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    z-index: auto;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+#btn-submit {
+    border: 2px solid #001a2d!important;
+    background-color: #FFFFFF;
+}
+
+#btn-submit:focus {
+    outline: none;
+}
+
+#btn-submit:hover {
+    background-color: #f7f7f7;
+}
+
+span>.td {
+    background-color: none;
+}
+
+#empty {
+    background-color: #FFFFFF;   
 }
