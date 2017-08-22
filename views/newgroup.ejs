@@ -20,7 +20,7 @@
 	        <h2>Members</h2>
 	        <% users.forEach(function(user){ %>
 	        	<div class="form-check">
-			        <input value="<%= user.username %>" type="checkbox">
+			        <input name="members[<%= user.username %>]" value="<%= user.username %>" type="checkbox">
               <label for="<%= user.username %>"><%= user.username %> </label>
 			        </div>
 	        <% }); %>

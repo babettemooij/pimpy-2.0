@@ -25,82 +25,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-var user = {
-		name: "Babette Mooij",
-		groups: ["FSR FNWI", "DB", "PR", "SOFacIT"],
-		tasks: [
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "In progress",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "Done",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "Not started",
-				group: "DB"
-			}
-		]
-	}
-
-var users = [
-	{
-		name: "Babette Mooij",
-		groups: ["FSR FNWI", "DB", "PR", "SOFacIT"],
-		tasks: [
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "In progress",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "Done",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Babette Mooij"],
-				status: "Not started",
-				group: "DB"
-			}
-		]
-	},
-	{
-		name: "Roan de Jong",
-		groups: ["FSR FNWI", "DB", "ExtraCurry", "Reglementen"],
-		tasks: [
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Roan de Jong"],
-				status: "In progress",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Roan de Jong"],
-				status: "Done",
-				group: "DB"
-			},
-			{
-				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-				people: ["Roan de Jong"],
-				status: "Not started",
-				group: "DB"
-			}
-		]
-	}
-]
-
 // Task.create({
 // 	name: "Babette Mooij",
 // 	tasks: []
@@ -150,22 +74,36 @@ app.get("/", function(req, res){
 	res.render("home");
 });
 
-app.get("/account", function(req, res){
+app.get("/account", isLoggedIn, function(req, res){
 	res.render("account");
 }); 
 
-app.get("/projects", function(req, res){
+app.get("/projects", isLoggedIn, function(req, res){
 	res.render("projects");
 });
 
 
-app.get("/mytasks", function(req, res){
+app.get("/mytasks", isLoggedIn, function(req, res){
+	var user = req.user;
 	res.render("mytasks", {user: user});
 });
 
-app.get("/tasks/:groupname", function(req, res){
+app.get("/tasks/:groupname", isLoggedIn, function(req, res){
+	var user = req.user;
 	var groupname = req.params.groupname;
-	res.render("tasks", {members: users, groupname: groupname, user: user});
+	var members = [];
+	User.find({}, function(err, users){
+		if (err){
+			console.log(err);
+		} else {
+			users.forEach(function(user){
+				if (user.groups.includes(groupname)) {
+					members.push(user);
+				}
+			});
+			res.render("tasks", {members: members, groupname: groupname, user: user});
+		}
+	});
 });
 
 app.post("/tasks", function(req, res){
@@ -182,7 +120,7 @@ app.delete("tasks", function(req, res){
 	console.log("delete");
 });
 
-app.get("/newgroup", function(req, res){
+app.get("/newgroup", isLoggedIn, function(req, res){
 	User.find({}, function(err, users){
 		if (err){
 			console.log(err);
@@ -192,21 +130,53 @@ app.get("/newgroup", function(req, res){
 	});
 });
 
+// app.post("/newgroup", function(req, res){
+// 	var members = ["Babette Mooij", "Femke Mostert"];
+// 	var groupname = req.body.groupname;
+// 	members.forEach(function(member) {
+// 		User.findOne({username: member}, function(err, user){
+// 			if (err){
+// 				console.log(err);
+// 			} else {
+// 				user.groups.push(groupname);
+// 				user.save(function(err, data){
+// 					if (err){
+// 						console.log(err);
+// 					} else {
+// 						res.redirect("/mytasks");
+// 					}
+// 				});
+// 			}
+// 		});
+// 	});
+// });
+
 app.post("/newgroup", function(req, res){
-	members = ["Babette Mooij", "Roan de Jong", "Femke Mostert"];
-	groupname: req.body.groupname
-	members.forEach(function(member) {
-		User.findOne({name: member}, function(err, user){
-			if(err){
-				console.log(err);
-			} else {
-				user.groups.push(groupname);
-			}
-		});
+	var groupname = req.body.groupname;
+	User.find({}, function(err, users){
+		if (err){
+			console.log(err);
+		} else {
+			users.forEach(function(user){
+				var name = user.username;
+				if (req.body.members[name] == name) {
+					user.groups.push(groupname);
+					user.save(function(err, data){
+						if (err){
+							console.log(err);
+						} else {
+							console.log(data);
+						}
+					});
+				}
+			});
+			res.redirect("/tasks/" + groupname);
+		}
 	});
 });
 
-app.get("/newminutes", function(req, res){
+app.get("/newminutes", isLoggedIn, function(req, res){
+	var user = req.user;
 	res.render("newminutes", {user: user});
 });
 
