@@ -1,224 +1,171 @@
-var express 	= require("express");
-	app 		= express();
-	bodyParser 	= require("body-parser");
-	mongoose 	= require("mongoose");
+var express 				= require("express"),
+	app 					= express(),
+	bodyParser 				= require("body-parser"),
+	mongoose 				= require("mongoose"),
+	passport 				= require("passport"),
+	Task					= require("./models/task"),
+	User					= require("./models/user"),
+	LocalStrategy 			= require("passport-local"),
+	passportLocalMongoose 	= require("passport-local-mongoose")
 
 mongoose.connect("mongodb://localhost/pimpy", {useMongoClient: true});
+app.use(require("express-session")({
+	secret: "Femke is the one and only persus",
+	resave: false,
+	saveUninitialized: false
+}));
+
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname + '/stylesheets'));
 app.set("view engine", "ejs");
 
-var groups = [
-	{
-		title: "FSR FNWI",
-		members: [
-			{
-				name: "Babette Mooij",
-				email: "babette_mooij@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			},
-			{
-				name: "Willemien zuilhof",
-				email: "femke_mosterdt@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Not started"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			},
-			{
-				name: "Veerle Groot",
-				email: "roan_jong@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			}
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+var user = {
+		name: "Babette Mooij",
+		groups: ["FSR FNWI", "DB", "PR", "SOFacIT"],
+		tasks: [
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "In progress",
+				group: "DB"
+			},
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "Done",
+				group: "DB"
+			},
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "Not started",
+				group: "DB"
+			}
+		]
+	}
+
+var users = [
+	{
+		name: "Babette Mooij",
+		groups: ["FSR FNWI", "DB", "PR", "SOFacIT"],
+		tasks: [
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "In progress",
+				group: "DB"
+			},
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "Done",
+				group: "DB"
+			},
+			{
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Babette Mooij"],
+				status: "Not started",
+				group: "DB"
+			}
 		]
 	},
 	{
-		title: "DB",
-		members: [
+		name: "Roan de Jong",
+		groups: ["FSR FNWI", "DB", "ExtraCurry", "Reglementen"],
+		tasks: [
 			{
-				name: "Babette Mooij",
-				email: "babette_mooij@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Roan de Jong"],
+				status: "In progress",
+				group: "DB"
 			},
 			{
-				name: "Femke Mostert",
-				email: "femke_mosterdt@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Not started"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Roan de Jong"],
+				status: "Done",
+				group: "DB"
 			},
 			{
-				name: "Roan de Jong",
-				email: "roan_jong@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
+				todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
+				people: ["Roan de Jong"],
+				status: "Not started",
+				group: "DB"
 			}
-
-		]
-	},
-	{
-		title: "PR",
-		members: [
-			{
-				name: "Babette Mooij",
-				email: "babette_mooij@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			},
-			{
-				name: "Parcival Maissan",
-				email: "femke_mosterdt@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Not started"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			},
-			{
-				name: "Kjeld Oostra",
-				email: "roan_jong@hotmail.com",
-				password: "abc1234",
-				tasks: [
-					{
-						todo: "[voor vakantie] Navragen bij masterstudenten die je kent welke onderzoeken/lezingen voor hen interessant zouden zijn (kijk bijvoorbeeld ook bij CWI)",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "Done"
-					},
-					{
-						todo: "[vv] Denk na waar we de 500 euro voor kunnen gebruiken.",
-						people: ["Boas Kluiving", "Babette Mooij"],
-						status: "In progress"
-					}
-				]
-			}
-
 		]
 	}
 ]
 
-var taskSchema = new mongoose.Schema({
-	todo: String,
-	people: Array,
-	status: String
-});
+// Task.create({
+// 	name: "Babette Mooij",
+// 	tasks: []
+// }, function(err, member){
+// 	Group.findOne({groupname: "DB"}, function(err, group){
+// 		if (err){
+// 			console.log(err);
+// 		} else {
+// 			group.members.push(member);
+// 			group.save(function(err, data){
+// 				if (err){
+// 					console.log(err);
+// 				} else {
+// 					console.log(data);
+// 				}
+// 			});
+// 		}
+// 	});
+// });
 
-var Task = mongoose.model("Task", taskSchema);
+// Task.create({
+// 	todo: "Denk na waar we de 500 euro voor kunnen gebruiken.",
+// 	people: ["Roan de Jong", "Babette Mooij"],
+// 	status: "Not started"
+// }, function(err, task){
+// 	Group.findOne({groupname: "DB"}, function(err, group){
+// 		if (err){
+// 			console.log(err);
+// 		} else {
+// 			group.members.forEach(function(member){
+// 				if (task.people.includes(member.name)){
+// 					member.tasks.push(task);
+// 					member.save(function(err, data){
+// 						if (err){
+// 							console.log(err);
+// 						} else {
+// 							console.log(data);
+// 						}
+// 					});
+// 				}
+// 			});
+// 		}
+// 	});
+// });
 
 app.get("/", function(req, res){
-	res.send("<h1> HOME PAGE BITCH </h1>");
+	res.render("home");
 });
 
+app.get("/account", function(req, res){
+	res.render("account");
+}); 
+
+app.get("/projects", function(req, res){
+	res.render("projects");
+});
+
+
 app.get("/mytasks", function(req, res){
-	Task.find({}, function(err, tasks) {
-		if(err) {
-			console.log(err);
-		} else {
-			var group = groups.filter(function(group) {
-  				return group.title == "DB";
-			});
-			res.render("mytasks", {tasks: tasks, groups: groups, group: group[0]});
-		}
-	});
+	res.render("mytasks", {user: user});
 });
 
 app.get("/tasks/:groupname", function(req, res){
-	Task.find({}, function(err, tasks) {
-		if(err) {
-			console.log(err);
-		} else {
-			var groupname = req.params.groupname;
-			var group = groups.filter(function(group) {
-  				return group.title == groupname;
-			});
-			res.render("tasks", {tasks: tasks, groups: groups, group: group[0]});
-		}
-	});
+	var groupname = req.params.groupname;
+	res.render("tasks", {members: users, groupname: groupname, user: user});
 });
 
 app.post("/tasks", function(req, res){
@@ -229,13 +176,6 @@ app.post("/tasks", function(req, res){
 		people: people,
 		status: "Not started"
 	}
-	Task.create(newTask, function(err, newTask) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.redirect("/tasks");
-		}
-	});
 });
 
 app.delete("tasks", function(req, res){
@@ -243,9 +183,76 @@ app.delete("tasks", function(req, res){
 });
 
 app.get("/newgroup", function(req, res){
-	members = ["Babette", "Roan", "Femke"]
-	res.render("newgroup", {members: members});
+	User.find({}, function(err, users){
+		if (err){
+			console.log(err);
+		} else {
+			res.render("newgroup", {users: users});
+		}
+	});
 });
+
+app.post("/newgroup", function(req, res){
+	members = ["Babette Mooij", "Roan de Jong", "Femke Mostert"];
+	groupname: req.body.groupname
+	members.forEach(function(member) {
+		User.findOne({name: member}, function(err, user){
+			if(err){
+				console.log(err);
+			} else {
+				user.groups.push(groupname);
+			}
+		});
+	});
+});
+
+app.get("/newminutes", function(req, res){
+	res.render("newminutes", {user: user});
+});
+
+app.get("/register", function(req, res){
+	res.render("register");
+});
+
+app.post("/register", function(req, res){
+	User.register(new User({
+		username: req.body.username, 
+		email: req.body.email, 
+		groups: [], 
+		tasks: []
+	}), req.body.password, function(err, user){
+		if(err){
+			console.log(err);
+			return res.render("register");
+		}
+		passport.authenticate("local")(req, res, function(){
+			res.redirect("/mytasks");
+		})
+	});
+});
+
+app.get("/login", function(req, res){
+	res.render("login");
+});
+
+app.post("/login", passport.authenticate("local", {
+	successRedirect: "/mytasks",
+	failureRedirect: "/login"
+	}), function(req, res){
+
+});
+
+app.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("/");
+});
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+};
 
 app.get("*", function(req, res){
 	res.send("Dead link");

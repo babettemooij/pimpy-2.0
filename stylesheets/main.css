@@ -327,7 +327,13 @@ button:not(.navbar-toggle) {
     padding-top: 20px;
     z-index: auto;
     margin-bottom: 20px;
-    width: 50%;
+    width: 90%;
+}
+
+@media (min-width: 900px){
+    .mainform {
+        width: 65%;
+    }
 }
 
 #btn-submit {
@@ -349,4 +355,24 @@ span>.td {
 
 #empty {
     background-color: #FFFFFF;   
+}
+
+.buttonwidth {
+    padding-top: 40px;
+    width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 535px){
+    .buttonwidth {
+        width: 90%;
+    }
+}
+
+h3 {
+    padding-top: 20px;
+}
+
+.bold {
+    font-weight: bold;
 }

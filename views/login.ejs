@@ -1,0 +1,22 @@
+<% include partials/html-header %>
+
+<div class="container mainform">
+	<h1 class="bold">Login</h1>
+
+	<div class="buttonwidth">
+		<form action="/login" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" name="username" placeholder="Name">
+			</div>
+			<div class="form-group">
+				<input type=password class="form-control" name="password" placeholder = "Password">
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn form-control" id="btn-submit" value="Login">
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<% include partials/html-footer %>

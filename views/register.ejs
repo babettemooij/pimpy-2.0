@@ -1,0 +1,25 @@
+<% include partials/html-header %>
+
+<div class="container mainform">
+	<h1 class="bold">Register</h1>
+
+	<div class="buttonwidth">
+		<form action="/register" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" name="username" placeholder="Full name">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="email" placeholder="Email adress">
+			</div>
+			<div class="form-group">
+				<input type=password class="form-control" name="password" placeholder = "Password">
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn form-control" id="btn-submit" value="Register">
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<% include partials/html-footer %>

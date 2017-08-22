@@ -1,0 +1,23 @@
+<% include partials/html-header %>
+<% include partials/header %>
+<div class="collapse navbar-collapse" id="bs-nav">
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/mytasks">Tasks</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a id="current" href="/account">Account</a></li>
+    </ul>
+  </div>
+</div>
+</nav>
+
+<div class="container mainform">
+	<h1> ACCOUNT PAGE </h1>
+    <div class="buttonwidth">
+    	<form action="/logout">
+        	<input type="submit" class="btn form-control" id="btn-submit" value="Logout"/>
+    	</form>
+    </div>
+</div>
+
+
+<% include partials/html-footer %>
