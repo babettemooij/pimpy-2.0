@@ -111,7 +111,6 @@ body {
         margin-left: 16.666667%;
         padding-left: 30px;
         overflow: scroll;
-        height: 93%;
         padding-right: 30px;
     }
     .sidebar .team-name {
@@ -324,10 +323,14 @@ button:not(.navbar-toggle) {
 .mainform {
     text-align: center;
     margin-top: 50px;
-    padding-top: 20px;
     z-index: auto;
     margin-bottom: 20px;
     width: 90%;
+}
+
+#back {
+    text-align: left!important;
+    padding-left: 5px;
 }
 
 @media (min-width: 900px){
@@ -375,4 +378,8 @@ h3 {
 
 .bold {
     font-weight: bold;
+}
+
+h1 {
+    padding-top: 20px;
 }

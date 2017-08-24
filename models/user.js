@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
 	email: String,
 	password: String,
 	groups: Array,
-	tasks: [
+	tasks:[ 
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Task"

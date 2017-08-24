@@ -65,7 +65,7 @@
 									<% } else { %>
 									green"
 								<% } %>> <%= task.status %> </span>
-									<form action="/tasks_method=DELETE” method="POST"><button type="submit" value=<&= task._id %>><span class="td"> <span class="glyphicon glyphicon-remove"></span></span></button></form>
+									<form action="/tasks/<%=groupname%>?_method=DELETE" method="POST"><input hidden name="id" value="<%= task._id %>"><button type="submit"><span class="td"> <span class="glyphicon glyphicon-remove"></span></span></button></form>
 								</div>
 							<% } %>
 						<% }); %>

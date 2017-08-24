@@ -5,30 +5,33 @@
       <li><a id="current" href="/mytasks">Tasks</a></li>
       <li><a href="/projects">Projects</a></li>
       <li><a href="/account">Account</a></li>
-    </ul>
-  </div>
+  </ul>
+</div>
 </div>
 </nav>
 
 <div class="container mainform">
-	<form action="/newgroup" method="POST">
-		<div class="form-group">
-			<h2>Group</h2>
-        	<input name="groupname" class="form-control" type="text" placeholder="Groupname" required>
-        </div>
-        <div class="form-group">
-	        <h2>Members</h2>
-	        <% users.forEach(function(user){ %>
-	        	<div class="form-check">
-			        <input name="members[<%= user.username %>]" value="<%= user.username %>" type="checkbox">
-              <label for="<%= user.username %>"><%= user.username %> </label>
-			        </div>
-	        <% }); %>
-        </div>
-        <div class="form-group buttonwidth">
-        	<input class="btn form-control" id="btn-submit" type="submit">
-        </div>
-	</form>
+    <h1> Add a new group </h1>
+    <div class="buttonwidth">
+        <form action="/newgroup" method="POST">
+            <div class="form-group">
+                <input name="groupname" class="form-control" type="text" placeholder="Groupname" required>
+            </div>
+            <div class="form-group">
+                <h2>Members</h2>
+                <% users.forEach(function(user){ %>
+                <div class="form-check">
+                   <input name="members[<%= user.username %>]" value="<%= user.username %>" type="checkbox">
+                   <label for="<%= user.username %>"><%= user.username %> </label>
+                </div>
+                <% }); %>
+            </div>
+            <div class="form-group">
+                <input class="btn form-control" id="btn-submit" type="submit" value="Create">
+            </div>
+        </form>
+        <p id="back"><a href="/"> Go back </a></p>
+    </div>
 </div>
 
 <% include partials/html-footer %>

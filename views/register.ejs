@@ -1,23 +1,24 @@
 <% include partials/html-header %>
 
 <div class="container mainform">
-	<h1 class="bold">Register</h1>
+	<h1 class="bold">Sign Up</h1>
 
 	<div class="buttonwidth">
 		<form action="/register" method="POST">
 			<div class="form-group">
-				<input type="text" class="form-control" name="username" placeholder="Full name">
+				<input type="text" class="form-control" autocomplete="new-password" name="username" placeholder="Full name" required>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" name="email" placeholder="Email adress">
+				<input type="text" class="form-control" autocomplete="new-password" name="email" placeholder="Email address" required>
 			</div>
 			<div class="form-group">
-				<input type=password class="form-control" name="password" placeholder = "Password">
+				<input type=password class="form-control" autocomplete="new-password" name="password" placeholder = "Password" required>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn form-control" id="btn-submit" value="Register">
+				<input type="submit" class="btn form-control" id="btn-submit" value="Sign up" required>
 			</div>
 		</form>
+		<p id="back"><a href="/"> Go back </a></p>
 	</div>
 </div>
 
