@@ -23,7 +23,7 @@
 				<% user.groups.forEach(function(group){ %>
 					<li><a href="/tasks/<%=group%>"> <%= group %></a></li>
 				<% }) %>
-				<li><a href="/newgroup"><span class="glyphicon glyphicon-plus"></span> Add group</a></li>
+				<li><a href="/newteam"><span class="glyphicon glyphicon-plus"></span> Add team</a></li>
 				<li><a href="/newminutes"><span class="glyphicon glyphicon-plus"></span> Add minutes</a></li>
 			</ul>
 		</div>
@@ -52,15 +52,31 @@
 													<%= person + ", " %> 
 												<% } %>
 											<% }) %> </span>
-											<span class="td btn  
-											<% if (task.status === "Not started") { %>
-											red"
-											<%} else if (task.status == "In progress") { %>
-											orange"
-											<% } else { %>
-											green"
-										<% } %>> <%= task.status %> </span>
-											<form action="/mytasks?_method=DELETE" method="POST"><input hidden name="id" value="<%= task._id %>"><button type="submit"><span class="td"> <span class="glyphicon glyphicon-remove"></span></span></button></form>
+											
+											<form action="/mytasks?_method=PUT" method="POST" class="td btn nopadding
+												<% if (task.status === "Not started") { %>
+												red"
+												<% } else if (task.status == "In progress") { %>
+												orange"
+												<% } else { %>
+												green"
+												<% } %>> 
+												<input hidden name="id" value="<%= task._id %>">
+												<input hidden name="status" value="<%= task.status %>">
+												
+												<button type="submit" class="btn block">
+													 <%= task.status %>
+												</button>
+											</form>
+											
+											<form action="/mytasks?_method=DELETE" method="POST" class="td">
+												<input hidden name="id" value="<%= task._id %>">
+												<button type="submit">
+													<span>
+														<span class="glyphicon glyphicon-remove"></span>
+													</span>
+												</button>
+											</form>
 										</div>
 									<% } %>
 								<% }); %>

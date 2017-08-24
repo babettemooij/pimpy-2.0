@@ -1,19 +1,3 @@
-$(".table").on("click", ".btn:not(#newtodo)", function(){
-	if ($(this).hasClass("green")) {
-		changeStatus($(this), "green", "red", "Not started");
-	} else if ($(this).hasClass("red")) {
-		changeStatus($(this), "red", "orange", "In progress");
-	} else if ($(this).hasClass("orange")) {
-		changeStatus($(this), "orange", "green", "Done");
-	}
-});
-
-function changeStatus(thisObj, from, to, text) {
-	thisObj.removeClass(from);
-	thisObj.addClass(to);
-	thisObj.text(text);
-}
-
 $(".table").on("click", ".newtodo", function(){
 	$(this).parent().hide();
 	makeFormNewTask($(this));

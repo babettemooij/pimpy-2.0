@@ -27,50 +27,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Task.create({
-// 	name: "Babette Mooij",
-// 	tasks: []
-// }, function(err, member){
-// 	Group.findOne({groupname: "DB"}, function(err, group){
-// 		if (err){
-// 			console.log(err);
-// 		} else {
-// 			group.members.push(member);
-// 			group.save(function(err, data){
-// 				if (err){
-// 					console.log(err);
-// 				} else {
-// 					console.log(data);
-// 				}
-// 			});
-// 		}
-// 	});
-// });
-
-// Task.create({
-// 	todo: "Denk na waar we de 500 euro voor kunnen gebruiken.",
-// 	people: ["Roan de Jong", "Babette Mooij"],
-// 	status: "Not started"
-// }, function(err, task){
-// 	Group.findOne({groupname: "DB"}, function(err, group){
-// 		if (err){
-// 			console.log(err);
-// 		} else {
-// 			group.members.forEach(function(member){
-// 				if (task.people.includes(member.name)){
-// 					member.tasks.push(task);
-// 					member.save(function(err, data){
-// 						if (err){
-// 							console.log(err);
-// 						} else {
-// 							console.log(data);
-// 						}
-// 					});
-// 				}
-// 			});
-// 		}
-// 	});
-// });
 
 app.get("/", function(req, res){
 	if (req.isAuthenticated()) {
@@ -87,12 +43,28 @@ app.get("/account", isLoggedIn, function(req, res){
 
 app.put("/account", isLoggedIn, function(req, res){
 	User.findByIdAndUpdate(req.body.id, req.body.user, function(err, updatedUser){
-		if (err) {
-			res.redirect("/account");
-		} else {
-			res.redirect("/account");
-		}
+		res.redirect("/account");
 	});
+});
+
+app.delete("/account", isLoggedIn, function(req, res){
+	var currentUser = req.user;
+	User.findOne({username: currentUser.username}).populate("tasks").exec(function(err, user){
+			if (err){
+				console.log(err);
+			} else {
+				var index = user.groups.indexOf(req.body.groupname);
+				if (index > -1) {
+				    user.groups.splice(index, 1);
+				    user.save(function(err){
+				    	if (err){
+				    		console.log(err);
+				    	}
+				    });
+				}
+				res.redirect("/account");
+			}
+		});
 });
 
 app.get("/projects", isLoggedIn, function(req, res){
@@ -107,6 +79,35 @@ app.get("/mytasks", isLoggedIn, function(req, res){
 			console.log(err);
 		} else {
 			res.render("mytasks", {user: user});
+		}
+	});
+});
+
+app.put("/mytasks", isLoggedIn, function(req, res){
+	var status = req.body.status;
+	if (status == "Not started") {
+		var newStatus = "In progress";
+	} else if (status == "In progress") {
+		var newStatus = "Done";
+	} else {
+		var newStatus = "Not started";
+	}
+	Task.findByIdAndUpdate(req.body.id, {status: newStatus}, function(err, updatedTask){
+		if (err){
+			console.log(err);
+		} else {
+			res.redirect("/mytasks");
+		}
+	});
+});
+
+app.delete("/mytasks", isLoggedIn, function(req, res){
+	var id = req.body.id;
+	Task.findByIdAndRemove(id, function(err){
+		if (err) {
+			res.redirect("back");
+		} else {
+			res.redirect("/mytasks");
 		}
 	});
 });
@@ -155,9 +156,7 @@ app.post("/tasks", isLoggedIn, function(req, res){
 						user.save(function(err, data){
 							if (err){
 								console.log(err);
-							} else {
-								console.log(data);
-							}
+							} 
 						});
 					}
 				});
@@ -167,13 +166,20 @@ app.post("/tasks", isLoggedIn, function(req, res){
 	});
 });
 
-app.delete("/mytasks", isLoggedIn, function(req, res){
-	var id = req.body.id;
-	Task.findByIdAndRemove(id, function(err){
-		if (err) {
-			res.redirect("back");
+app.put("/tasks/:groupname", isLoggedIn, function(req, res){
+	var status = req.body.status;
+	if (status == "Not started") {
+		var newStatus = "In progress";
+	} else if (status == "In progress") {
+		var newStatus = "Done";
+	} else {
+		var newStatus = "Not started";
+	}
+	Task.findByIdAndUpdate(req.body.id, {status: newStatus}, function(err, updatedTask){
+		if (err){
+			console.log(err);
 		} else {
-			res.redirect("/mytasks");
+			res.redirect("/tasks/" + req.params.groupname);
 		}
 	});
 });
@@ -189,7 +195,7 @@ app.delete("/tasks/:groupname", isLoggedIn, function(req, res){
 	});
 });
 
-app.get("/newgroup", isLoggedIn, function(req, res){
+app.get("/newteam", isLoggedIn, function(req, res){
 	User.find({}, function(err, users){
 		if (err){
 			console.log(err);
@@ -199,7 +205,7 @@ app.get("/newgroup", isLoggedIn, function(req, res){
 	});
 });
 
-app.post("/newgroup", isLoggedIn, function(req, res){
+app.post("/newteam", isLoggedIn, function(req, res){
 	var groupname = req.body.groupname;
 	User.find({}, function(err, users){
 		if (err){
@@ -212,8 +218,6 @@ app.post("/newgroup", isLoggedIn, function(req, res){
 					user.save(function(err, data){
 						if (err){
 							console.log(err);
-						} else {
-							console.log(data);
 						}
 					});
 				}
@@ -280,7 +284,7 @@ function isLoggedIn(req, res, next){
 	res.redirect("/login");
 };
 
-app.get("*", function(req, res){
+app.get("*", isLoggedIn, function(req, res){
 	res.send("Dead link");
 });
 

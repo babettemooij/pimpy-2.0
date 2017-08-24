@@ -28,6 +28,26 @@
         </form>
     </div>
 
+    <div class="space">
+        <h2>My teams</h2>
+        <div class="buttonwidth">
+            <% if (user.groups.length == 0) { %>
+                <p> You have no teams yet! </p>
+            <% } else { %>
+                <% user.groups.forEach(function(group){ %>
+                    <div class="form-group">
+                    <div class="tr buttonwidth">
+                        <div class="team td form-control nopadding">
+                            <%= group %>
+                        </div>
+                        <form action="/account?_method=DELETE" method="POST"><input hidden name="groupname" value="<%= group %>"><button type="submit"><span class="removeteam td"> <span class="glyphicon glyphicon-remove"></span></span></button></form>
+                    </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+
     <div class="buttonwidth">
         <form action="/logout">
             <input type="submit" class="btn form-control" id="btn-submit" value="Sign out"/>

@@ -162,6 +162,7 @@ a {
 
 .table { 
     width: 100%!important; 
+    margin-bottom: 15px!important;
 }
 
 .tbody>.tr {
@@ -169,7 +170,7 @@ a {
     background-color: #FFFFFF!important;
 }
 
-.table>.tr>.td {
+.table>.tr>.td:not(.team) {
     border: none;
     border-top: none!important;
 }
@@ -186,15 +187,15 @@ a {
 }
 
 .green {
-    background-color: #00C875;
+    background-color: #00C875!important;
 }
 
 .red {
-    background-color: #E2445C;
+    background-color: #E2445C!important;
 }
 
 .orange {
-    background-color: #FDAB3D;
+    background-color: #FDAB3D!important;
 }
 
 .btn {
@@ -227,9 +228,12 @@ h3 {
 .form-control {
     border-radius: 0px;
     color: #001a2d;
+    max-width: 100%;
+}
+
+.td>.form-control {
     padding-left: 6px;
     padding-right: 6px;
-    max-width: 100%;
 }
 
 .tr>.td:nth-child(1):not(.newtodo) {
@@ -297,13 +301,16 @@ h3 {
 .td, .th {
     display: table-cell;
     vertical-align: inherit;
+}
+
+.td:not(.nopadding) {
     padding: 8px;
 }
 
 .th {
     font-weight: bold;
     background-color: #FFFFFF!important;
-    padding-left: 8px;
+    padding: 8px;
 }
 
 button {
@@ -322,6 +329,7 @@ button:not(.navbar-toggle) {
 
 .mainform {
     text-align: center;
+    padding-top: 20px;
     margin-top: 50px;
     z-index: auto;
     margin-bottom: 20px;
@@ -380,6 +388,32 @@ h3 {
     font-weight: bold;
 }
 
-h1 {
+h2 {
     padding-top: 20px;
+}
+
+.team {
+    width: 100%!important;
+    color: #001a2d;
+    background-color: #FFFFFF!important;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.space {
+    padding-top: 20px;
+}
+
+.removeteam {
+    width: 10%!important;
+}
+
+.nopadding {
+    padding: auto!important;
+}
+
+.btn:focus {
+    outline: none!important;
 }
