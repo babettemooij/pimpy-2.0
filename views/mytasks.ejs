@@ -32,56 +32,81 @@
 			<h1><%= user.username %></h1>
 			<% user.groups.forEach(function(group) { %>
 				<h3><%= group %></h3>
-						<div class="table">
-						<div class="thead">
-							<div class="tr" colspan="3">
-								<span class="th">Task</span>
-								<span class="th">People</span>
-								<span class="th">Status</span>
+				<div class="table">
+				<div class="thead">
+					<div class="tr" colspan="3">
+						<span class="th">Task</span>
+						<span class="th">People</span>
+						<span class="th">Status</span>
+					</div>
+				</div>
+					<div class="tbody">
+						<% user.tasks.forEach(function(task) { %>
+							<% if (task.group == group){ %>
+								<div class="tr">
+									<span class="td"> <%= task.todo %> </span>
+									<span class="td"> <% task.people.forEach(function(person){ %>
+										<% if (person == task.people[task.people.length - 1]) { %>
+											<%= person %>
+										<% } else { %>
+											<%= person + ", " %> 
+										<% } %>
+									<% }) %> </span>
+									
+									<form action="/mytasks?_method=PUT" method="POST" class="td btn nopadding
+										<% if (task.status === "Not started") { %>
+										red"
+										<% } else if (task.status == "In progress") { %>
+										orange"
+										<% } else { %>
+										green"
+										<% } %>> 
+										<input hidden name="id" value="<%= task._id %>">
+										<input hidden name="status" value="<%= task.status %>">
+										
+										<button type="submit" class="btn block">
+											 <%= task.status %>
+										</button>
+									</form>
+									
+									<form action="/mytasks?_method=DELETE" method="POST" class="td">
+										<input hidden name="id" value="<%= task._id %>">
+										<button type="submit">
+											<span>
+												<span class="glyphicon glyphicon-remove"></span>
+											</span>
+										</button>
+									</form>
+								</div>
+							<% } %>
+						<% }); %>
+						<form class="tr formnewtask" action="/mytasks/<%=group%>" method="POST" id="<%=group%>">
+							<div class="td"> 
+								<textarea class="form-control" name="todo" rows="1"></textarea> 
+							</div>
+							<div class="td"> 
+								<textarea class="form-control" name="people" rows="1"></textarea> 
+							</div>
+							<input hidden name="groupname" value="'+ currentLocation + '">
+							<div class="td red btn"> Not started </div>
+							<div class="td" id="empty">
+								<button type="submit"><span class="glyphicon glyphicon-plus"></span></button>
+							</div>
+						</form>
+						<div class="tr"> 
+							<div class="newtodo1 td btn" id="<%=group%>">
+								<span class="glyphicon glyphicon-plus"></span>
+								New task
+							</div>
+							<div class="newtodo1 td btn" id="<%=group%>">
+							</div>
+							<div class="newtodo1 td btn" id="<%=group%>">
+							</div>
+							<div class="td" id="empty">
 							</div>
 						</div>
-							<div class="tbody">
-								<% user.tasks.forEach(function(task) { %>
-									<% if (task.group == group){ %>
-										<div class="tr">
-											<span class="td"> <%= task.todo %> </span>
-											<span class="td"> <% task.people.forEach(function(person){ %>
-												<% if (person == task.people[task.people.length - 1]) { %>
-													<%= person %>
-												<% } else { %>
-													<%= person + ", " %> 
-												<% } %>
-											<% }) %> </span>
-											
-											<form action="/mytasks?_method=PUT" method="POST" class="td btn nopadding
-												<% if (task.status === "Not started") { %>
-												red"
-												<% } else if (task.status == "In progress") { %>
-												orange"
-												<% } else { %>
-												green"
-												<% } %>> 
-												<input hidden name="id" value="<%= task._id %>">
-												<input hidden name="status" value="<%= task.status %>">
-												
-												<button type="submit" class="btn block">
-													 <%= task.status %>
-												</button>
-											</form>
-											
-											<form action="/mytasks?_method=DELETE" method="POST" class="td">
-												<input hidden name="id" value="<%= task._id %>">
-												<button type="submit">
-													<span>
-														<span class="glyphicon glyphicon-remove"></span>
-													</span>
-												</button>
-											</form>
-										</div>
-									<% } %>
-								<% }); %>
-							</div>
-						</div>
+					</div>
+				</div>
 			<% }); %>
 		</div>
 	</div>

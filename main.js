@@ -7,7 +7,8 @@ var express 				= require("express"),
 	Task					= require("./models/task"),
 	User					= require("./models/user"),
 	LocalStrategy 			= require("passport-local"),
-	passportLocalMongoose 	= require("passport-local-mongoose")
+	passportLocalMongoose 	= require("passport-local-mongoose"),
+	async 					= require('async');
 
 mongoose.connect("mongodb://localhost/pimpy", {useMongoClient: true});
 app.use(require("express-session")({
@@ -26,7 +27,6 @@ app.set("view engine", "ejs");
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.get("/", function(req, res){
 	if (req.isAuthenticated()) {
@@ -134,36 +134,21 @@ app.get("/tasks/:groupname", isLoggedIn, function(req, res){
 	}
 });
 
+app.post("/mytasks/:groupname", isLoggedIn, function(req, res){
+	var todo = req.body.todo;
+	var people = req.body.people.split(", ");
+	var groupname = req.params.groupname;
+	addTask(todo, people, groupname);
+	res.redirect("/mytasks");
+});
+
 app.post("/tasks", isLoggedIn, function(req, res){
 	var todo = req.body.todo;
-	var people = req.body.people;
+	var people = req.body.people.split(", ");
 	var url = req.body.groupname;
 	var groupname = url.substring(7, url.length);
-	var newTask = {
-		todo: todo,
-		people: people,
-		group: groupname,
-		status: "Not started"
-	}
-	Task.create(newTask, function(err, newTask){
-		if (err) {
-			console.log(err);
-		} else {
-			User.find({}, function(err, users) {
-				users.forEach(function(user){
-					if (newTask.people.includes(user.username)){
-						user.tasks.push(newTask);
-						user.save(function(err, data){
-							if (err){
-								console.log(err);
-							} 
-						});
-					}
-				});
-			});
-			res.redirect(url);
-		}
-	});
+	addTask(todo, people, groupname);
+	res.redirect(url);
 });
 
 app.put("/tasks/:groupname", isLoggedIn, function(req, res){
@@ -211,7 +196,7 @@ app.post("/newteam", isLoggedIn, function(req, res){
 		if (err){
 			console.log(err);
 		} else {
-			users.forEach(function(user){
+			async.forEach(users, function(user, next){
 				var name = user.username;
 				if (req.body.members[name] == name) {
 					user.groups.push(groupname);
@@ -219,17 +204,48 @@ app.post("/newteam", isLoggedIn, function(req, res){
 						if (err){
 							console.log(err);
 						}
+						next();
 					});
 				}
+			}, function() {
 			});
-			res.redirect("/tasks/" + groupname);
 		}
 	});
+	res.redirect("/tasks/" + groupname);
 });
 
 app.get("/newminutes", isLoggedIn, function(req, res){
 	var user = req.user;
 	res.render("newminutes", {user: user});
+});
+
+app.post("/newminutes", isLoggedIn, function(req, res){
+	var groupname = req.body.group;
+	var minutes = req.body.minutes.split("\n");
+	async.forEach(minutes, function(line, next){
+		line = line.split(": ");
+		var todo = line[1];
+		var index = line[0].indexOf(" ");
+		var action = line[0].substr(0, index);
+		if (action == "ACTIE" || action == "TODO") {
+			var people = line[0].substr(index + 1).split(", ");
+			addTask(todo, people, groupname);
+		} else if (action == "ACTIES" || action == "TODOS"){
+			var people = [];
+			User.find({}, function(err, users){
+				async.forEach(users, function(user){
+					if (user.groups.includes(groupname)) {
+						people.push(user.username);
+					}
+				});
+				addTask(todo, people, groupname);
+			});
+		}
+		next();
+	}, function(){
+
+	});
+	res.redirect("/tasks/" + groupname);
 });
 
 app.get("/register", function(req, res){
@@ -282,6 +298,33 @@ function isLoggedIn(req, res, next){
 		return next();
 	}
 	res.redirect("/login");
+};
+
+function addTask(todo, people, groupname){
+	var newTask = {
+		todo: todo,
+		people: people,
+		group: groupname,
+		status: "Not started"
+	}
+	Task.create(newTask, function(err, newTask){
+		if (err) {
+			console.log(err);
+		} else {
+			User.find({}, function(err, users) {
+				users.forEach(function(user){
+					if (newTask.people.includes(user.username)){
+						user.tasks.push(newTask);
+						user.save(function(err, data){
+							if (err){
+								console.log(err);
+							} 
+						});
+					}
+				});
+			});
+		}
+	});
 };
 
 app.get("*", isLoggedIn, function(req, res){

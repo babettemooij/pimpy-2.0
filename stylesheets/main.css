@@ -217,6 +217,11 @@ a {
     text-align: left;
 }
 
+.newtodo1 {
+    background-color: #f7f7f7!important;
+    text-align: left;
+}
+
 .th {
     border:none!important
 } 
@@ -395,11 +400,6 @@ h2 {
 .team {
     width: 100%!important;
     color: #001a2d;
-    background-color: #FFFFFF!important;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 12px;
-    padding-right: 12px;
 }
 
 .space {
@@ -410,10 +410,10 @@ h2 {
     width: 10%!important;
 }
 
-.nopadding {
-    padding: auto!important;
-}
-
 .btn:focus {
     outline: none!important;
+}
+
+.formnewtask {
+    display: none;
 }
